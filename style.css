@@ -1,0 +1,514 @@
+/* ==========================================================================
+   HAUSER.LOL — CUSTOM STYLES & ATMOSPHERIC DESIGN SYSTEM
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Hide scrollbar for clean horizontal tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== 1. ATMOSPHERIC BACKGROUND (RICH PURPLE & TEAL GLOW) ===== */
+body {
+  background-color: #06050e;
+  color: #e4e4e7;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Multi-layered rich cosmic ambient glow (Vibrant, luminous, never flat black) */
+.bg-cosmic-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* Top Hero Core Purple Glow */
+    radial-gradient(ellipse 90% 70% at 50% -5%, rgba(147, 51, 234, 0.32) 0%, rgba(109, 40, 217, 0.22) 35%, transparent 75%),
+    /* Right Hero Cyan/Teal Atmospheric Glow */
+    radial-gradient(ellipse 75% 55% at 85% 35%, rgba(6, 182, 212, 0.18) 0%, rgba(20, 184, 166, 0.08) 40%, transparent 68%),
+    /* Center Left Violet Nebula Glow */
+    radial-gradient(ellipse 70% 60% at 15% 65%, rgba(168, 85, 247, 0.24) 0%, rgba(88, 28, 135, 0.14) 45%, transparent 72%),
+    /* Bottom Contact Section Radiant Orb */
+    radial-gradient(ellipse 95% 85% at 50% 92%, rgba(124, 58, 237, 0.3) 0%, rgba(6, 182, 212, 0.12) 45%, transparent 75%),
+    /* Deep atmospheric gradient base */
+    linear-gradient(180deg, #070612 0%, #0a081a 25%, #080616 60%, #04030a 100%);
+}
+
+/* Dynamic subtle background grid lines */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(147, 51, 234, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Ambient drifting colorful nebula lights */
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(90px);
+  opacity: 0.75;
+  animation: ambientPulse 14s ease-in-out infinite alternate;
+}
+
+@keyframes ambientPulse {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.1) translateY(-25px);
+    opacity: 0.9;
+  }
+}
+
+/* ===== MOUSE TRAILER (DUAL PURPLE + TEAL GLOW) ===== */
+.mouse-trailer-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.trailer-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+
+.trailer-purple {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.18) 0%, rgba(124, 58, 237, 0.07) 45%, transparent 70%);
+  filter: blur(45px);
+}
+
+.trailer-teal {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(20, 184, 166, 0.05) 50%, transparent 70%);
+  filter: blur(35px);
+}
+
+.trailer-core {
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(6, 182, 212, 0.18) 50%, transparent 80%);
+  filter: blur(14px);
+}
+
+/* Space Canvas for Floating Particles & Constellations */
+#spaceCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== 2. TRANSPARENT GLASSMORPHISM NAVBAR ===== */
+.nav-glass {
+  background: rgba(10, 8, 22, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(147, 51, 234, 0.18);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Glass Cards & Containers */
+.glass-card {
+  background: rgba(16, 13, 34, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(147, 51, 234, 0.2);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(147, 51, 234, 0.05);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(147, 51, 234, 0.45);
+  box-shadow: 0 0 35px rgba(147, 51, 234, 0.22), inset 0 0 25px rgba(147, 51, 234, 0.08);
+  transform: translateY(-3px);
+}
+
+.glass-pill {
+  background: rgba(20, 16, 42, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(147, 51, 234, 0.22);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.glass-pill:hover {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 6px 25px rgba(147, 51, 234, 0.25);
+}
+
+/* Buttons & Glow Effects */
+.glow-btn {
+  position: relative;
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #a855f7 100%);
+  box-shadow: 0 0 25px rgba(147, 51, 234, 0.45);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.glow-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 38px rgba(147, 51, 234, 0.7), 0 4px 22px rgba(6, 182, 212, 0.35);
+}
+
+.glow-btn-outline {
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.glow-btn-outline:hover {
+  border-color: rgba(147, 51, 234, 0.6);
+  background: rgba(147, 51, 234, 0.12);
+  box-shadow: 0 0 25px rgba(147, 51, 234, 0.25);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+/* ===== 3. PROFILE DISK WITH MULTI-LAYER GLOWING RINGS ===== */
+.profile-master-wrapper {
+  position: relative;
+  width: 390px;
+  height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: diskFloat 7s ease-in-out infinite;
+}
+
+@keyframes diskFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0.6deg);
+  }
+}
+
+/* Outer faint orbital track ring */
+.orbit-track {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  border: 1px solid rgba(147, 51, 234, 0.25);
+  animation: orbitSpin 28s linear infinite;
+}
+
+/* Orbiting satellites on the outer track */
+.satellite-cyan {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: #06b6d4;
+  border-radius: 50%;
+  top: 18%;
+  left: 2%;
+  box-shadow: 0 0 14px #06b6d4, 0 0 28px rgba(6, 182, 212, 0.9);
+}
+
+.satellite-pink {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #ec4899;
+  border-radius: 50%;
+  bottom: 25%;
+  right: 3%;
+  box-shadow: 0 0 12px #ec4899, 0 0 22px rgba(236, 72, 153, 0.8);
+}
+
+/* Deep atmospheric neon aura */
+.disk-glow-aura {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #9333ea 0%,
+    #06b6d4 30%,
+    #ec4899 55%,
+    #7c3aed 80%,
+    #9333ea 100%
+  );
+  filter: blur(32px);
+  opacity: 0.55;
+  animation: auraPulse 4s ease-in-out infinite alternate, orbitSpin 12s linear infinite reverse;
+}
+
+@keyframes auraPulse {
+  0% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 0.75;
+    transform: scale(1.06);
+  }
+}
+
+/* Multi-layered rotating neon glowing border disk */
+.disk-neon-border {
+  position: relative;
+  width: 295px;
+  height: 295px;
+  border-radius: 50%;
+  padding: 3.5px;
+  background: conic-gradient(
+    from 0deg,
+    #a855f7 0%,
+    #06b6d4 35%,
+    #3b82f6 50%,
+    #ec4899 75%,
+    #9333ea 90%,
+    #a855f7 100%
+  );
+  box-shadow:
+    0 0 35px rgba(147, 51, 234, 0.5),
+    0 0 65px rgba(6, 182, 212, 0.3),
+    inset 0 0 25px rgba(147, 51, 234, 0.4);
+  animation: borderSpin 6s linear infinite;
+}
+
+@keyframes borderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Image container inside the disk */
+.disk-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0d0a20;
+  border: 4px solid #070514;
+}
+
+.disk-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.profile-master-wrapper:hover .disk-inner img {
+  transform: scale(1.04);
+}
+
+/* Floating badges outside the disk */
+.badge-float-right {
+  position: absolute;
+  right: -24px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: badgeBobRight 4s ease-in-out infinite;
+  z-index: 10;
+}
+
+.badge-float-bottom {
+  position: absolute;
+  left: -12px;
+  bottom: 22px;
+  animation: badgeBobBottom 4.5s ease-in-out infinite 0.7s;
+  z-index: 10;
+}
+
+@keyframes badgeBobRight {
+  0%, 100% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(calc(-50% - 7px)) translateX(3px);
+  }
+}
+
+@keyframes badgeBobBottom {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-8px) translateX(-2px);
+  }
+}
+
+/* Typography Gradients */
+.gradient-text-hero {
+  background: linear-gradient(135deg, #ffffff 10%, #c084fc 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-contact {
+  background: linear-gradient(135deg, #38bdf8 0%, #a855f7 45%, #ec4899 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #06b6d4;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, #06b6d4, transparent);
+  border-radius: 2px;
+}
+
+/* Marquee */
+.marquee-track {
+  display: flex;
+  animation: marqueeAnimation 24s linear infinite;
+  width: max-content;
+}
+
+@keyframes marqueeAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Tab Pills */
+.tab-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  border-radius: 9999px;
+  border: 1px solid rgba(147, 51, 234, 0.2);
+  background: rgba(20, 16, 42, 0.6);
+  color: #a1a1aa;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.tab-pill:hover {
+  border-color: rgba(147, 51, 234, 0.5);
+  color: #f4f4f5;
+  transform: translateY(-2px);
+}
+
+.tab-pill.active {
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  border-color: #a855f7;
+  color: #ffffff;
+  box-shadow: 0 4px 25px rgba(147, 51, 234, 0.5);
+}
+
+/* Scope Option Cards */
+.scope-option-card {
+  border: 1px solid rgba(147, 51, 234, 0.2);
+  background: rgba(18, 14, 38, 0.7);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scope-option-card:hover {
+  border-color: rgba(147, 51, 234, 0.5);
+  background: rgba(28, 22, 58, 0.8);
+  transform: translateY(-2px);
+}
+
+.scope-option-card.selected {
+  border-color: #a855f7;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(6, 182, 212, 0.15));
+  box-shadow: 0 0 25px rgba(147, 51, 234, 0.35), inset 0 0 18px rgba(147, 51, 234, 0.2);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #06050e;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.35);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 51, 234, 0.6);
+}
+
+/* Shooting Star */
+.shooting-star {
+  position: absolute;
+  width: 110px;
+  height: 2px;
+  background: linear-gradient(90deg, #06b6d4, rgba(147, 51, 234, 0.9), transparent);
+  transform: rotate(-35deg);
+  opacity: 0;
+  pointer-events: none;
+  animation: shootAnim 6s ease-in-out infinite;
+}
+
+@keyframes shootAnim {
+  0% {
+    transform: translateX(-100px) translateY(100px) rotate(-35deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(350px) translateY(-350px) rotate(-35deg);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
