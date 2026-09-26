@@ -1,96 +1,1174 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Secret Chat</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aryan — Developer & Seller</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind Theme Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            dark: {
+              950: '#030208',
+              900: '#06050e',
+              850: '#0a0818',
+              800: '#100d24',
+              700: '#181436',
+              600: '#221c4a',
+              500: '#322a68',
+            },
+            neon: {
+              purple: '#9333ea',
+              violet: '#7c3aed',
+              cyan: '#06b6d4',
+              teal: '#14b8a6',
+              magenta: '#ec4899',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- External Modular Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="h-screen w-full overflow-hidden flex flex-col bg-[#0a0818] text-white">
 
-<!-- JOIN SCREEN -->
-<div id="joinScreen" class="flex-1 min-h-0 flex items-center justify-center p-4">
-  <div class="glass rounded-2xl p-8 w-full max-w-sm">
-    <h1 class="text-2xl font-semibold mb-1 text-center">Secret Chat</h1>
-    <p class="text-sm text-purple-300/70 text-center mb-6">Anonymous. No login. Just a code.</p>
+<body class="selection:bg-purple-900 selection:text-white">
 
-    <label class="text-xs text-purple-300/70 mb-1 block">Nickname</label>
-    <input id="nickname" maxlength="20" placeholder="Alex"
-      class="w-full mb-4 px-4 py-2.5 rounded-lg bg-black/30 border border-purple-500/20 text-gray-100 placeholder-gray-500">
-
-    <label class="text-xs text-purple-300/70 mb-1 block">Secret Room Code</label>
-    <input id="roomCode" placeholder="secret789"
-      class="w-full mb-4 px-4 py-2.5 rounded-lg bg-black/30 border border-purple-500/20 text-gray-100 placeholder-gray-500">
-
-    <button id="createRoomBtn" class="btn-ghost w-full mb-3 py-2.5 rounded-lg text-sm">Create Random Room</button>
-    <button id="joinBtn" class="btn-glow w-full py-2.5 rounded-lg font-medium">Join Secret Chat</button>
-
-    <p id="joinError" class="text-red-400 text-xs mt-3 text-center hidden"></p>
+  <!-- ===== 1. RICH ATMOSPHERIC COSMIC BACKGROUND LAYERS ===== -->
+  <div class="bg-cosmic-glow"></div>
+  <div class="bg-grid"></div>
+  <div class="ambient-glow">
+    <div class="absolute top-[8%] left-[18%] w-[550px] h-[550px] rounded-full bg-purple-700/30"></div>
+    <div class="absolute top-[38%] right-[8%] w-[650px] h-[650px] rounded-full bg-cyan-600/25"></div>
+    <div class="absolute bottom-[12%] left-[22%] w-[600px] h-[600px] rounded-full bg-violet-700/30"></div>
   </div>
-</div>
 
-<!-- CHAT SCREEN (fixed, WhatsApp/Instagram style: header / scroll area / input) -->
-<div id="chatScreen" class="flex-1 min-h-0 hidden flex flex-col">
+  <!-- Space Canvas for Floating Particles & Constellations -->
+  <canvas id="spaceCanvas"></canvas>
 
-  <header class="flex-none z-10 border-b border-purple-900/40 bg-[#0a0818]/80 backdrop-blur-md px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
-    <div class="min-w-0 flex-1">
-      <p class="text-sm font-semibold truncate">Room: <span id="roomLabel" class="text-purple-300"></span></p>
-      <p class="text-xs text-gray-500 truncate">as <span id="nickLabel"></span></p>
-    </div>
-    <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
-      <button id="copyLinkBtn" title="Copy Link" class="btn-ghost flex items-center gap-1.5 px-2 sm:px-2.5 py-2 rounded-lg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0"><path d="M9 12a4 4 0 0 1 4-4h2a4 4 0 1 1 0 8h-1"/><path d="M15 12a4 4 0 0 1-4 4H9a4 4 0 1 1 0-8h1"/></svg>
-        <span class="btn-label hidden sm:inline text-xs">Copy Link</span>
-      </button>
-      <button id="saveBtn" title="Save Chat" class="btn-ghost flex items-center gap-1.5 px-2 sm:px-2.5 py-2 rounded-lg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-        <span class="hidden sm:inline text-xs">Save</span>
-      </button>
-      <button id="deleteBtn" title="Delete All Chat" class="btn-ghost flex items-center gap-1.5 px-2 sm:px-2.5 py-2 rounded-lg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0"><path d="M4 7h16M9 7V4h6v3m-8 0 1 13a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-13"/></svg>
-        <span class="hidden sm:inline text-xs">Delete</span>
-      </button>
-      <button id="leaveBtn" title="Leave Room" class="btn-ghost flex items-center gap-1.5 px-2 sm:px-2.5 py-2 rounded-lg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0"><path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
-        <span class="hidden sm:inline text-xs">Leave</span>
-      </button>
+  <!-- Mouse Trailer Container (Dual purple + teal glow) -->
+  <div class="mouse-trailer-container" id="mouseTrailerContainer">
+    <div class="trailer-blob trailer-purple" id="trailerPurple"></div>
+    <div class="trailer-blob trailer-teal" id="trailerTeal"></div>
+    <div class="trailer-blob trailer-core" id="trailerCore"></div>
+  </div>
+
+
+  <!-- ============================================ -->
+  <!-- 2. TRANSPARENT GLASSMORPHISM NAVBAR -->
+  <!-- ============================================ -->
+  <header class="fixed top-0 left-0 right-0 z-40 nav-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-4">
+
+        <!-- Left: Logo ("Hauser" with small gradient icon) -->
+        <a href="#hero" class="flex items-center gap-2.5 flex-shrink-0 group">
+          <div
+            class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 p-[1.5px] shadow-[0_0_18px_rgba(147,51,234,0.5)]">
+            <div class="w-full h-full bg-[#0c0920] rounded-[7px] flex items-center justify-center gap-0.5">
+              <span class="w-1.5 h-1.5 rounded-sm bg-white"></span>
+              <span class="w-1.5 h-1.5 rounded-sm bg-amber-400"></span>
+            </div>
+          </div>
+          <span class="text-white font-extrabold text-lg tracking-tight group-hover:text-purple-300 transition-colors">
+            Aryan
+          </span>
+        </a>
+
+        <!-- Center: Navigation Links (PROMOS | STORE | NETWORKS | CONTACT | XENON MARKET with arrow) -->
+        <nav class="hidden lg:flex items-center gap-8 font-mono text-[11px] tracking-[0.16em] uppercase">
+          <a href="#hero" class="text-zinc-300 hover:text-white transition-colors duration-200">Promos</a>
+          <a href="#store" class="text-zinc-300 hover:text-white transition-colors duration-200">Store</a>
+          <a href="#networks" class="text-zinc-300 hover:text-white transition-colors duration-200">Networks</a>
+          <a href="#contact" class="text-zinc-300 hover:text-white transition-colors duration-200">Contact</a>
+          <a href="http://www.fiverr.com/s/61YLpVR target="_blank" rel="noopener noreferrer"
+            class="text-zinc-500 hover:text-zinc-300 transition-colors duration-200 flex items-center gap-1 opacity-70 hover:opacity-100">
+            <span>Fiverr Market</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </nav>
+
+        <!-- Right: Search input/badge with '⌘ search', theme toggle, and prominent glowing purple button -->
+        <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+
+          <!-- Search input/badge with '⌘ search' -->
+          <button id="searchTrigger"
+            class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-purple-500/25 bg-purple-950/30 hover:bg-purple-900/40 hover:border-purple-500/50 text-zinc-300 text-xs font-mono transition-all group shadow-[0_0_12px_rgba(147,51,234,0.1)]">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
+            <span class="text-zinc-300 font-medium">⌘ search</span>
+          </button>
+
+          <!-- Theme Toggle Icon Button -->
+          <button
+            class="w-9 h-9 rounded-lg border border-purple-500/25 bg-purple-950/30 hover:bg-purple-900/40 hover:border-purple-500/50 text-zinc-300 hover:text-white flex items-center justify-center transition-all"
+            aria-label="Toggle Theme" title="Theme">
+            <i data-lucide="moon" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Prominent Pill-Shaped Glowing Purple "Contact me →" Button -->
+          <button onclick="openScopeModal()"
+            class="glow-btn px-5 py-2 rounded-full text-white text-xs font-semibold tracking-wide flex items-center gap-1.5 shadow-[0_0_22px_rgba(147,51,234,0.45)]">
+            <span>Order Now!</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Hamburger Menu Button -->
+        <div class="flex lg:hidden items-center gap-2">
+          <button onclick="openScopeModal()"
+            class="glow-btn px-3.5 py-1.5 rounded-full text-white text-xs font-semibold sm:hidden flex items-center gap-1">
+            <span>Contact</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </button>
+          <button id="mobileMenuOpen"
+            class="w-9 h-9 rounded-lg border border-purple-500/25 bg-purple-950/40 text-zinc-300 hover:text-white flex items-center justify-center"
+            aria-label="Open Navigation">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+      </div>
     </div>
   </header>
 
-  <div id="messages" class="flex-1 min-h-0 overflow-y-auto p-3 sm:p-4 space-y-3 custom-scroll"></div>
+  <!-- Mobile Drawer Menu -->
+  <div id="mobileDrawer"
+    class="fixed inset-0 z-50 bg-[#070514]/95 backdrop-blur-2xl transform translate-x-full transition-transform duration-300 flex flex-col p-6 lg:hidden">
+    <div class="flex items-center justify-between pb-6 border-b border-purple-900/40">
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-md bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center">
+          <span class="w-1.5 h-1.5 rounded-sm bg-white"></span>
+        </div>
+        <span class="text-white font-bold text-base">Aryan</span>
+      </div>
+      <button id="mobileMenuClose"
+        class="w-9 h-9 rounded-lg border border-purple-500/30 text-zinc-400 hover:text-white flex items-center justify-center">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
 
-  <div class="flex-none z-10 border-t border-purple-900/40 bg-[#0a0818]/90 backdrop-blur-md p-3 sm:p-4 flex gap-2 items-center">
-    <button id="plusBtn" title="Send Image" class="plus-btn w-10 h-10 shrink-0 rounded-lg flex items-center justify-center text-xl leading-none">+</button>
-    <input type="file" id="imageInput" accept="image/*" class="hidden">
-    <input id="msgInput" placeholder="Type a secret..." autocomplete="off"
-      class="flex-1 min-w-0 px-4 py-2.5 rounded-lg bg-black/30 border border-purple-500/20 text-gray-100 placeholder-gray-500">
-    <button id="sendBtn" class="btn-glow px-4 sm:px-5 py-2.5 rounded-lg font-medium shrink-0">Send</button>
-  </div>
-</div>
+    <nav class="flex flex-col gap-5 py-8 font-mono text-sm tracking-widest uppercase">
+      <a href="#hero" class="mobile-nav-link text-zinc-300 hover:text-purple-400 py-1">Promos</a>
+      <a href="#services" class="mobile-nav-link text-zinc-300 hover:text-purple-400 py-1">Work</a>
+      <a href="#store" class="mobile-nav-link text-zinc-300 hover:text-purple-400 py-1">Store</a>
+      <a href="#networks" class="mobile-nav-link text-zinc-300 hover:text-purple-400 py-1">Networks</a>
+      <a href="https://discord.com/users/1208641341559676948" class="mobile-nav-link text-zinc-300 hover:text-purple-400 py-1">Contact</a>
+      <a href="http://www.fiverr.com/s/61YLpVR" target="_blank"
+        class="mobile-nav-link text-cyan-400 flex items-center gap-1.5 py-1">
+        <span>Fiverr Market</span>
+        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+      </a>
+    </nav>
 
-<!-- DELETE CONFIRM MODAL -->
-<div id="deleteModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
-  <div class="glass rounded-2xl p-6 w-full max-w-sm">
-    <h2 class="font-semibold mb-2">Delete all chat?</h2>
-    <p class="text-sm text-gray-400 mb-5">This wipes the room's messages for everyone, instantly. This can't be undone.</p>
-    <div class="flex gap-3">
-      <button id="cancelDelete" class="btn-ghost flex-1 py-2 rounded-lg text-sm">Cancel</button>
-      <button id="confirmDelete" class="flex-1 py-2 rounded-lg text-sm font-medium bg-red-600/80 hover:bg-red-600">Delete</button>
+    <div class="mt-auto pt-6 border-t border-purple-900/40">
+      <button onclick="openScopeModal(); document.getElementById('mobileDrawer').classList.add('translate-x-full');"
+        class="glow-btn block w-full py-3 rounded-full text-white text-center font-medium text-sm">
+        Start a project →
+      </button>
     </div>
   </div>
-</div>
 
-<!-- IMAGE PREVIEW MODAL -->
-<div id="imageModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
-  <button id="closeImageModal" class="absolute top-4 right-4 text-white text-3xl leading-none">&times;</button>
-  <img id="imageModalImg" src="" class="max-w-full max-h-full rounded-xl" alt="full size">
-</div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script src="script.js"></script>
+  <!-- ============================================ -->
+  <!-- 3. HERO SECTION WITH VIBRANT PROFILE DISK -->
+  <!-- ============================================ -->
+  <section id="hero"
+    class="relative min-h-[92vh] flex items-center pt-28 pb-16 px-4 sm:px-6 lg:px-12 overflow-hidden z-10">
+
+    <!-- Hero Background Atmospheric Purple Glow Orb -->
+    <div
+      class="absolute top-[20%] left-[5%] w-[500px] h-[500px] rounded-full bg-purple-600/15 blur-[120px] pointer-events-none">
+    </div>
+    <div
+      class="absolute top-[25%] right-[5%] w-[550px] h-[550px] rounded-full bg-cyan-500/15 blur-[120px] pointer-events-none">
+    </div>
+
+    <div class="shooting-star" style="top: 18%; right: 28%; animation-delay: 0.5s;"></div>
+    <div class="shooting-star" style="top: 48%; right: 12%; animation-delay: 3.5s;"></div>
+
+    <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+
+      <!-- Left Hero Column (7 cols) -->
+      <div class="lg:col-span-7 flex flex-col items-start">
+
+        <!-- Good Evening / Time Greeting -->
+        <p id="timeGreeting" class="font-mono text-xs tracking-[0.25em] text-cyan-400 uppercase mb-4 font-semibold">
+          GOOD EVENING.
+        </p>
+
+        <!-- Status Pill: Open for commissions -->
+        <div
+          class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-950/40 backdrop-blur-md mb-6 shadow-[0_0_18px_rgba(34,197,94,0.15)]">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+          </span>
+          <span class="text-xs sm:text-sm text-zinc-200 font-medium">Open for commissions</span>
+        </div>
+
+        <!-- Big Bold Title with Playful Overlapping Shapes (as in hauser.lol) -->
+        <div class="relative mb-4 select-none">
+          <h1 class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-white tracking-tighter leading-[0.9]">
+            Ary<span class="relative inline-block">
+              <span class="gradient-text-hero">an</span>
+              <!-- Geometric Accent Shapes Overlapping the 'er' -->
+              <span
+                class="absolute -top-3 -right-3 w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-lime-400/40 mix-blend-screen blur-[1px] pointer-events-none"></span>
+              <span
+                class="absolute top-2 -right-4 w-6 h-8 sm:w-8 sm:h-10 bg-cyan-500/35 rounded-sm mix-blend-screen blur-[1px] pointer-events-none"></span>
+            </span>
+          </h1>
+        </div>
+
+        <!-- Subtitle Tags: • DEVELOPER • SELLER -->
+        <div
+          class="flex items-center gap-2.5 font-mono text-xs tracking-[0.2em] uppercase font-bold text-cyan-400 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#06b6d4]"></span>
+          <span>DEVELOPER</span>
+          <span class="text-zinc-500 font-normal">·</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_8px_#c084fc]"></span>
+          <span class="text-purple-400">SELLER</span>
+        </div>
+
+        <!-- Headline -->
+        <div class="mb-5">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
+            You've seen the ads.<br />
+            This is who makes them.
+          </h2>
+        </div>
+
+        <!-- Paragraph Description -->
+        <p class="text-zinc-300 text-sm sm:text-base leading-relaxed max-w-xl mb-8">
+          Everything I sell lives on Fiverr Market — Websites, AI tools etc. This page is the promo reel and the fastest
+          way to reach me for custom work, collabs or questions about a product.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center gap-4">
+          <button onclick="openScopeModal()"
+            class="glow-btn px-6 py-3 rounded-full text-white text-sm font-semibold flex items-center gap-2">
+            <span>Start a project</span>
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </button>
+          <a href="http://www.fiverr.com/s/61YLpVR" target="_blank"
+            class="glow-btn-outline px-6 py-3 rounded-full text-zinc-300 hover:text-white text-sm font-medium flex items-center gap-2">
+            <span>Shop on Fiverr Market</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-400"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Right Hero Column: THE COMPLEX GLOWING PROFILE DISK & FLOATING TAGS (5 cols) -->
+      <div class="lg:col-span-5 flex justify-center lg:justify-end relative mt-6 lg:mt-0">
+
+        <div class="profile-master-wrapper">
+
+          <!-- Outer orbital track line with rotating satellites -->
+          <div class="orbit-track">
+            <div class="satellite-cyan" title="Status: Online"></div>
+            <div class="satellite-pink" title="Activity: Active"></div>
+          </div>
+
+          <!-- Deep diffuse multi-color atmospheric glowing aura -->
+          <div class="disk-glow-aura"></div>
+
+          <!-- Rotating multi-layer glowing gradient ring border -->
+          <div class="disk-neon-border">
+            <div class="disk-inner">
+              <img src="portfolio.jpg"
+                alt="Aryan - Developer & Seller" loading="eager" />
+            </div>
+          </div>
+
+          <!-- Floating Badge 1 (Right): "replies within a day" -->
+          <div class="badge-float-right">
+            <div
+              class="glass-pill px-3.5 py-1.5 rounded-full flex items-center gap-2 text-[11px] font-mono tracking-wide text-zinc-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#06b6d4]"></span>
+              <span>replies within a day</span>
+            </div>
+          </div>
+
+          <!-- Floating Badge 2 (Bottom-Left): "promos • ads • joins" -->
+          <div class="badge-float-bottom">
+            <div
+              class="glass-pill px-4 py-1.5 rounded-full flex items-center gap-2 text-[11px] font-mono tracking-wide text-zinc-200">
+              <span class="text-purple-400 font-medium">promos</span>
+              <span class="text-zinc-600">·</span>
+              <span class="text-cyan-400 font-medium">ads</span>
+              <span class="text-zinc-600">·</span>
+              <span class="text-pink-400 font-medium">joins</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- STATS ROW (MINIMAL & 100% TRANSPARENT ON BACKGROUND) -->
+  <!-- ============================================ -->
+  <section class="relative z-10 py-5 sm:py-6 px-4 sm:px-6 lg:px-12 border-t border-purple-500/15 bg-transparent">
+    <div
+      class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-purple-500/15">
+
+      <!-- Stat 1 -->
+      <div class="pt-2 lg:pt-0 lg:px-6 flex flex-col items-start justify-center">
+        <p class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+          1<span class="text-purple-400 font-bold">+</span>
+        </p>
+        <p class="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] text-zinc-400 uppercase mt-1">
+          Year Active
+        </p>
+      </div>
+
+      <!-- Stat 2 -->
+      <div class="pt-2 lg:pt-0 lg:px-6 flex flex-col items-start justify-center">
+        <p class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+          24h<span class="text-cyan-400">/</span>48h
+        </p>
+        <p class="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] text-zinc-400 uppercase mt-1">
+          Response Time
+        </p>
+      </div>
+
+      <!-- Stat 3 -->
+      <div class="pt-3 lg:pt-0 lg:px-6 flex flex-col items-start justify-center">
+        <p class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+          7<span class="text-purple-400 font-bold">+</span>
+        </p>
+        <p class="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] text-zinc-400 uppercase mt-1">
+          Projects Shipped
+        </p>
+      </div>
+
+      <!-- Stat 4 -->
+      <div class="pt-3 lg:pt-0 lg:px-6 flex flex-col items-start justify-center">
+        <p class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+          100<span class="text-teal-400 font-bold">%</span>
+        </p>
+        <p class="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] text-zinc-400 uppercase mt-1">
+          Satisfaction Rate
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- SCROLLING MARQUEE (EXACT HAUSER VIBE) -->
+  <!-- ============================================ -->
+  <section class="relative z-10 py-4 overflow-hidden border-y border-purple-500/15 bg-black/25">
+    <div class="marquee-track flex items-center gap-8 select-none">
+      <span class="font-black text-sm sm:text-base tracking-[0.22em] text-zinc-300 uppercase flex items-center gap-8">
+        <span>PRODUCT DROPS</span> <span
+          class="flex items-center gap-1.5 text-pink-500 text-xs"><span>◆</span><span>◆</span></span>
+        <span>SOCIAL ADS</span> <span
+          class="flex items-center gap-1.5 text-purple-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>SHORTS</span> <span
+          class="flex items-center gap-1.5 text-cyan-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>FIVERR MARKET</span> <span
+          class="flex items-center gap-1.5 text-pink-500 text-xs"><span>◆</span><span>◆</span></span>
+        <span>CUSTOM BOTS</span> <span
+          class="flex items-center gap-1.5 text-purple-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>PROMO BANNERS</span> <span
+          class="flex items-center gap-1.5 text-cyan-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>LAUNCH TEASERS</span> <span
+          class="flex items-center gap-1.5 text-pink-500 text-xs"><span>◆</span><span>◆</span></span>
+      </span>
+      <span class="font-black text-sm sm:text-base tracking-[0.22em] text-zinc-300 uppercase flex items-center gap-8">
+        <span>PRODUCT DROPS</span> <span
+          class="flex items-center gap-1.5 text-pink-500 text-xs"><span>◆</span><span>◆</span></span>
+        <span>SOCIAL ADS</span> <span
+          class="flex items-center gap-1.5 text-purple-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>SHORTS</span> <span
+          class="flex items-center gap-1.5 text-cyan-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>FIVERR MARKET</span> <span
+          class="flex items-center gap-1.5 text-pink-500 text-xs"><span>◆</span><span>◆</span></span>
+        <span>CUSTOM BOTS</span> <span
+          class="flex items-center gap-1.5 text-purple-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>PROMO BANNERS</span> <span
+          class="flex items-center gap-1.5 text-cyan-400 text-xs"><span>◆</span><span>◆</span></span>
+        <span>LAUNCH TEASERS</span> <span
+          class="flex items-center gap-1.5 text-pink-500 text-xs"><span>◆</span><span>◆</span></span>
+      </span>
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 4. HAUSER DYNAMIC SHOWCASE & NAVIGATION BAR -->
+  <!-- ============================================ -->
+  <section id="services" class="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- New Sleek Full-Width Horizontal Navigation Bar (Directly on gradient background) -->
+      <div
+        class="w-full flex items-center justify-start overflow-x-auto no-scrollbar py-3 px-2 sm:px-4 mb-8 border-b border-purple-500/20 bg-transparent">
+        <nav
+          class="flex items-center gap-3 sm:gap-6 lg:gap-8 font-mono text-xs sm:text-sm tracking-[0.18em] uppercase whitespace-nowrap"
+          id="portfolioFilterNav">
+          <button
+            class="portfolio-filter-btn active py-2 relative transition-all duration-300 text-white font-bold flex items-center gap-1.5"
+            data-category="work">
+            <span>WORK</span>
+            <span
+              class="active-indicator absolute -bottom-[13px] left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_12px_#06b6d4]"></span>
+          </button>
+          <span class="text-zinc-600 text-xs select-none">•</span>
+          <button
+            class="portfolio-filter-btn py-2 relative transition-all duration-300 text-zinc-400 hover:text-white flex items-center gap-1.5"
+            data-category="store">
+            <span>STORE</span>
+            <span
+              class="active-indicator hidden absolute -bottom-[13px] left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_12px_#06b6d4]"></span>
+          </button>
+          <span class="text-zinc-600 text-xs select-none">•</span>
+          
+          <button
+            class="portfolio-filter-btn py-2 relative transition-all duration-300 text-zinc-400 hover:text-white flex items-center gap-1.5"
+            data-category="websites">
+            <span>WEBSITES</span>
+            <span
+              class="active-indicator hidden absolute -bottom-[13px] left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_12px_#06b6d4]"></span>
+          </button>
+          <span class="text-zinc-600 text-xs select-none">•</span>
+          
+          <button
+            class="portfolio-filter-btn py-2 relative transition-all duration-300 text-zinc-400 hover:text-white flex items-center gap-1.5"
+            data-category="networks">
+            <span>NETWORKS</span>
+            <span
+              class="active-indicator hidden absolute -bottom-[13px] left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_12px_#06b6d4]"></span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Single Large Updated Details Card (Dynamic via JS) -->
+      <div id="dynamicShowcaseContainer" class="w-full transition-all duration-300">
+        <!-- Rendered dynamically via script.js -->
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 5. ABOUT SECTION ("A little about me") -->
+  <!-- ============================================ -->
+  <section id="about" class="relative z-10 py-24 sm:py-32 px-4 sm:px-6 lg:px-12 border-t border-purple-900/30">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+
+      <!-- Left Bio (6 cols) -->
+      <div class="lg:col-span-6">
+        <div class="section-label mb-3">About</div>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+          A little<br />about me
+        </h2>
+        <p class="text-zinc-300 text-base leading-relaxed mb-6">
+          I'm Aryan — a freelance developer building and designing Websites, Portfolio Webs and Custom Web App/AI Tools.
+          Everything ships through Fiverr Market, and the promo creative you see around it is mine too.
+        </p>
+        <p class="text-xl sm:text-2xl font-bold text-white leading-snug">
+          I like building things that are useful, fast and slightly weird.
+        </p>
+      </div>
+
+      <!-- Right Side Panel Grid (6 cols) -->
+      <div class="lg:col-span-6 glass-card rounded-2xl p-6 sm:p-8">
+
+        <!-- Info Rows -->
+        <div class="divide-y divide-purple-900/40 mb-8 font-mono text-xs sm:text-sm">
+          <div class="flex items-center justify-between py-3.5">
+            <span class="text-zinc-400 uppercase tracking-widest">Base</span>
+            <span class="text-zinc-100 font-medium">India</span>
+          </div>
+          <div class="flex items-center justify-between py-3.5">
+            <span class="text-zinc-400 uppercase tracking-widest">Focus</span>
+            <span class="text-zinc-200 font-medium text-right">UI & UX · Portfolio Webs · AI Tools</span>
+          </div>
+          <div class="flex items-center justify-between py-3.5">
+            <span class="text-zinc-400 uppercase tracking-widest">Store</span>
+            <span class="text-purple-300 font-medium">Fiverr Market</span>
+          </div>
+          <div class="flex items-center justify-between py-3.5">
+            <span class="text-zinc-400 uppercase tracking-widest">Stack</span>
+            <span class="text-zinc-300 font-medium text-right">OpenAI · Node · Python · vanilla web</span>
+          </div>
+        </div>
+
+        <!-- Tech Stack Pills -->
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:border-purple-400 transition-colors">discord.js
+            v14</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:border-purple-400 transition-colors">Node.js</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:border-purple-400 transition-colors">MongoDB</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:border-purple-400 transition-colors">Python
+            / Flask</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 hover:border-cyan-400 transition-colors">HTML
+            · CSS · JS</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:border-purple-400 transition-colors">PWAs</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-teal-950/60 border border-teal-500/30 text-teal-300 hover:border-teal-400 transition-colors">WebGL
+            & motion</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:border-purple-400 transition-colors">Vercel
+            / Netlify</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-pink-950/60 border border-pink-500/30 text-pink-300 hover:border-pink-400 transition-colors">Promo
+            Seller</span>
+          <span
+            class="px-3 py-1.5 rounded-full text-xs font-mono bg-pink-950/60 border border-pink-500/30 text-pink-300 hover:border-pink-400 transition-colors">Ads
+            Seller</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 6. STORE SECTION ("Digital products") -->
+  <!-- ============================================ -->
+  <section id="store" class="relative z-10 py-24 sm:py-32 px-4 sm:px-6 lg:px-12 border-t border-purple-900/30">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="grid lg:grid-cols-12 gap-8 items-start mb-10">
+        <div class="lg:col-span-7">
+          <div class="section-label mb-3">Store</div>
+          <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+            Digital products
+          </h2>
+        </div>
+        <div class="lg:col-span-5 lg:text-right self-end">
+          <p class="text-zinc-300 text-sm font-mono">
+            Everything I sell lives on Fiverr.
+          </p>
+        </div>
+      </div>
+
+      <!-- Store Card Container with dashed neon border -->
+      <div
+        class="glass-card rounded-2xl p-10 sm:p-16 text-center border-dashed border-purple-500/35 hover:border-purple-400/60">
+        <h3 class="text-3xl sm:text-4xl font-black text-white mb-2">
+          Nothing here yet.
+        </h3>
+        <p class="font-mono text-xs tracking-widest text-zinc-400 uppercase mb-8">
+          Something's cooking.
+        </p>
+        <a href="http://www.fiverr.com/s/61YLpVR" target="_blank"
+          class="glow-btn-outline inline-flex items-center gap-2 px-6 py-3 rounded-full text-zinc-200 text-sm font-semibold">
+          <span>Browse Fiverr Market</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-400"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 7. NETWORKS SECTION ("Find me") -->
+  <!-- ============================================ -->
+  <section id="networks" class="relative z-10 py-24 sm:py-32 px-4 sm:px-6 lg:px-12 border-t border-purple-900/30">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="mb-10">
+        <div class="section-label mb-3">Networks</div>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+          Find me
+        </h2>
+      </div>
+
+      <div class="glass-card rounded-2xl divide-y divide-purple-900/40 overflow-hidden">
+
+        <!-- Discord Network Row -->
+        <a href="https://discord.com/users/1208641341559676948" target="_blank"
+          class="flex flex-col sm:flex-row sm:items-center justify-between p-6 sm:p-8 hover:bg-purple-950/30 transition-all group">
+          <div class="flex items-center gap-3.5 mb-2 sm:mb-0">
+            <span class="text-2xl font-black text-white group-hover:text-purple-300 transition-colors">Discord</span>
+            <span
+              class="font-mono text-xs text-cyan-400 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-800/60">Aryan</span>
+            <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span
+              class="px-3 py-1 rounded-full text-[11px] font-mono border border-cyan-500/40 text-cyan-300 bg-cyan-950/40 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+              <span>OPEN</span>
+            </span>
+            <span class="font-mono text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors hidden md:block">
+              discord.com/users/1208641341559676948
+            </span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors"></i>
+          </div>
+        </a>
+
+        <!-- Xenon Market Network Row -->
+        <a href="http://www.fiverr.com/s/61YLpVR" target="_blank"
+          class="flex flex-col sm:flex-row sm:items-center justify-between p-6 sm:p-8 hover:bg-purple-950/30 transition-all group">
+          <div class="flex items-center gap-3.5 mb-2 sm:mb-0">
+            <span class="text-2xl font-black text-white group-hover:text-purple-300 transition-colors">Fiverr
+              Market Gig</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="font-mono text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors hidden md:block">
+              http://www.fiverr.com/s/61YLpVR
+            </span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors"></i>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 8. THE VAULT / ADS & PROMOS SECTION -->
+  <!-- ============================================ -->
+  <section id="vault"
+    class="relative z-10 py-24 sm:py-32 px-4 sm:px-6 lg:px-12 border-t border-purple-900/30 overflow-hidden">
+
+    <!-- Watermark text in background -->
+    <div
+      class="absolute -top-10 left-10 text-[120px] sm:text-[180px] font-black text-white/[0.02] select-none pointer-events-none">
+      The Vault
+    </div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+
+      <div class="mb-10">
+        <div class="section-label mb-3">Ads & Promos</div>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-3">
+          The Vault
+        </h2>
+        <p class="text-zinc-300 text-sm sm:text-base max-w-xl">
+          Banners, teasers and campaign creative for every fiverr drop. Click a tile to view it full-size.
+        </p>
+      </div>
+
+      <!-- Filter button -->
+      <div class="mb-8">
+        <button
+          class="px-5 py-1.5 rounded-full text-xs font-mono uppercase bg-purple-600 text-white font-bold tracking-wider shadow-[0_0_18px_rgba(147,51,234,0.5)]">
+          ALL
+        </button>
+      </div>
+
+      <!-- The Vault Announcement Card with vibrant gradient border -->
+      <div
+        class="relative rounded-2xl p-[1.5px] bg-gradient-to-r from-purple-600 via-cyan-500 to-emerald-500 shadow-[0_0_40px_rgba(147,51,234,0.3)]">
+        <div class="rounded-[15px] bg-gradient-to-b from-[#120d2c] to-[#070514] p-10 sm:p-16 text-center">
+          <span class="font-mono text-xs tracking-[0.25em] text-cyan-400 uppercase block mb-3 font-semibold">
+            Loading the Vault
+          </span>
+          <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-6">
+            New promos dropping soon<span class="text-purple-400">.</span>
+          </h3>
+          <a href="http://www.fiverr.com/s/61YLpVR" target="_blank"
+            class="glow-btn-outline inline-flex items-center gap-2 px-6 py-3 rounded-full text-zinc-200 text-sm font-semibold">
+            <span>See what's live on Fiverr</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-400"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 9. CONTACT SECTION ("Want to work with me?") -->
+  <!-- ============================================ -->
+  <section id="contact"
+    class="relative z-10 py-28 sm:py-40 px-4 sm:px-6 lg:px-12 border-t border-purple-900/30 overflow-hidden">
+
+    <!-- Concentric orbital background rings -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+      <div class="w-[520px] h-[520px] rounded-full border border-purple-500/20 animate-spin"
+        style="animation-duration: 45s;"></div>
+      <div class="w-[780px] h-[780px] rounded-full border border-cyan-500/15 animate-spin"
+        style="animation-duration: 65s; animation-direction: reverse;"></div>
+      <div class="w-[600px] h-[600px] rounded-full bg-purple-600/20 blur-[130px]"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10 text-center">
+
+      <div class="section-label justify-center mb-4">Contact</div>
+
+      <h2 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight mb-6">
+        Want to work<br />
+        <span class="gradient-text-contact">with me?</span>
+      </h2>
+
+      <p class="text-zinc-300 text-sm sm:text-base max-w-lg mx-auto mb-10 leading-relaxed">
+        Custom websites, portfolio webs, collabs — or a question about something on fiverr. Send a message and I reply
+        within a day.
+      </p>
+
+      <!-- Primary Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
+        <button onclick="openScopeModal()"
+          class="glow-btn px-8 py-3.5 rounded-full text-white font-semibold text-sm flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+          <span>Let's scope your project</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+        <a href="https://discord.com/users/1208641341559676948" target="_blank"
+          class="glow-btn-outline px-8 py-3.5 rounded-full text-zinc-200 hover:text-white font-semibold text-sm flex items-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4 text-cyan-400"></i>
+          <span>Message on Discord</span>
+        </a>
+      </div>
+
+      <!-- Quick Links Chips -->
+      <div class="flex items-center justify-center gap-6 font-mono text-xs text-zinc-400">
+        <a href="http://www.fiverr.com/s/61YLpVR" target="_blank"
+          class="hover:text-purple-300 transition-colors flex items-center gap-1">
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          <span>Fiverr</span>
+        </a>
+        <a href="https://discord.com/users/1208641341559676948" target="_blank"
+          class="hover:text-cyan-300 transition-colors flex items-center gap-1">
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          <span>Discord</span>
+        </a>
+      </div>
+
+      <!-- Footnote as in hauser.lol -->
+      <div class="mt-20 text-zinc-500 font-mono text-xs flex items-center justify-center gap-2">
+        <span>* Aryan — built with far too many particles.</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 10. FOOTER -->
+  <!-- ============================================ -->
+  <footer class="relative z-10 py-10 px-4 sm:px-6 lg:px-12 border-t border-purple-900/40 bg-[#05040d]">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+
+      <div class="flex items-center gap-2.5">
+        <div class="w-6 h-6 rounded bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center">
+          <span class="w-1 h-1 rounded-sm bg-white"></span>
+        </div>
+        <span class="text-zinc-300 font-semibold text-sm">Aryan</span>
+      </div>
+
+      <p class="font-mono text-xs text-zinc-500">
+        © 2026 Aryan. All rights reserved.
+      </p>
+
+      <div class="flex items-center gap-5 text-zinc-400">
+        <a href="https://discord.com/users/1208641341559676948" target="_blank"
+          class="hover:text-purple-400 transition-colors" aria-label="Discord">
+          <i data-lucide="message-square" class="w-4 h-4"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank" class="hover:text-cyan-400 transition-colors"
+          aria-label="Twitter">
+          <i data-lucide="twitter" class="w-4 h-4"></i>
+        </a>
+        <a href="https://github.com/AryanNotFound404" target="_blank" class="hover:text-white transition-colors" aria-label="GitHub">
+          <i data-lucide="github" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================ -->
+  <!-- 11. INTERACTIVE MULTI-STEP SCOPING MODAL -->
+  <!-- ============================================ -->
+  <div id="scopeModal"
+    class="fixed inset-0 z-50 bg-black/85 backdrop-blur-2xl hidden items-center justify-center p-4 overflow-y-auto">
+
+    <!-- Modal Card Container -->
+    <div
+      class="relative w-full max-w-xl rounded-2xl bg-[#0e0a24]/95 border border-purple-500/35 p-6 sm:p-10 shadow-[0_0_70px_rgba(147,51,234,0.35)] my-8">
+
+      <!-- Close Button -->
+      <button onclick="closeScopeModal()"
+        class="absolute top-5 right-5 w-8 h-8 rounded-lg border border-purple-500/30 text-zinc-400 hover:text-white hover:border-purple-400 flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Step Indicator Bar -->
+      <div class="mb-6 pr-8">
+        <div class="flex items-center justify-between text-xs font-mono mb-2">
+          <span class="text-cyan-400 flex items-center gap-1.5 font-bold tracking-wider">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#06b6d4]"></span>
+            <span id="scopeStepLabel">STEP 1 OF 5</span>
+          </span>
+          <span class="text-zinc-400 font-medium" id="scopeStepName">PROJECT TYPE</span>
+        </div>
+        <div class="w-full bg-purple-950/60 h-1.5 rounded-full overflow-hidden border border-purple-500/20">
+          <div id="scopeProgressBar"
+            class="bg-gradient-to-r from-cyan-400 to-purple-600 h-full w-[20%] transition-all duration-300 rounded-full shadow-[0_0_10px_#06b6d4]">
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM CONTENT WRAPPER -->
+      <div id="scopeStepsContainer">
+
+        <!-- ================= STEP 1: Project Type Selection ================= -->
+        <div id="step1" class="scope-step block">
+          <h3 class="text-xl sm:text-2xl font-black text-white mb-2">
+            What type of project do you want to build?
+          </h3>
+          <p class="text-zinc-300 text-xs sm:text-sm mb-6">
+            Choose the category that best matches your target goal.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('projectType', 'Website', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Website</p>
+                <p class="text-xs text-zinc-400">Multi-page, modern, responsive</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('projectType', 'Portfolio Web', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Portfolio Web</p>
+                <p class="text-xs text-zinc-400">Creative personal showcase</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('projectType', 'Landing Page', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Landing Page</p>
+                <p class="text-xs text-zinc-400">High-converting promo drop</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('projectType', 'Custom Web App / AI Tool', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Custom Web App / AI Tool</p>
+                <p class="text-xs text-zinc-400">Fullstack app, bot, SaaS</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STEP 2: Timeline Selection ================= -->
+        <div id="step2" class="scope-step hidden">
+          <h3 class="text-xl sm:text-2xl font-black text-white mb-2">
+            How soon do you need this?
+          </h3>
+          <p class="text-zinc-300 text-xs sm:text-sm mb-6">
+            Delivery timelines are strictly scoped and adhered to.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('timeline', '5-7 days', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">5-7 days</p>
+                <p class="text-xs text-zinc-400">Fast sprint turnaround</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('timeline', '1-2 weeks', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">1-2 weeks</p>
+                <p class="text-xs text-zinc-400">Standard iterative delivery</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('timeline', 'As soon as possible (ASAP)', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">As soon as possible (ASAP)</p>
+                <p class="text-xs text-zinc-400">Priority expedited queue</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('timeline', 'Flexible', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Flexible</p>
+                <p class="text-xs text-zinc-400">No strict deadline</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STEP 3: Budget Selection ================= -->
+        <div id="step3" class="scope-step hidden">
+          <h3 class="text-xl sm:text-2xl font-black text-white mb-2">
+            What is your budget range?
+          </h3>
+          <p class="text-zinc-300 text-xs sm:text-sm mb-6">
+            Helps calibrate scope, design complexity, and stack selection.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('budget', 'Under ₹2-₹5K', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Under $10</p>
+                <p class="text-xs text-zinc-400">Single landing, quick script</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('budget', 'Under ₹5-₹10K (Recommended)', this)">
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <p class="text-sm font-semibold text-white">Under $25</p>
+                  <span
+                    class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-purple-900/80 text-purple-300 border border-purple-600/50">REC</span>
+                </div>
+                <p class="text-xs text-zinc-400">Full portfolio, custom bot</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('budget', 'Under ₹10K-₹25K', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Under $100-$200</p>
+                <p class="text-xs text-zinc-400">Complex web app, SaaS, AI</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+
+            <div class="scope-option-card p-4 rounded-xl flex items-center justify-between"
+              onclick="selectOption('budget', 'Let\'s discuss', this)">
+              <div>
+                <p class="text-sm font-semibold text-white">Let's discuss</p>
+                <p class="text-xs text-zinc-400">Custom tailored scope</p>
+              </div>
+              <div class="option-check w-4 h-4 rounded-full border border-zinc-600 flex items-center justify-center">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STEP 4: Project Description ================= -->
+        <div id="step4" class="scope-step hidden">
+          <h3 class="text-xl sm:text-2xl font-black text-white mb-2">
+            Tell me about it
+          </h3>
+          <p class="text-zinc-300 text-xs sm:text-sm mb-5">
+            Share features, references, or your vision for this project.
+          </p>
+
+          <div class="space-y-4 mb-6">
+            <div>
+              <label class="block text-xs font-mono uppercase tracking-wider text-zinc-300 mb-1.5">
+                Requirements & Scope Notes
+              </label>
+              <textarea id="scopeDescriptionInput" rows="4"
+                placeholder="e.g. Modern dark theme portfolio website with neon purple & teal glow, smooth mouse trailer, and dynamic discord integration..."
+                class="w-full rounded-xl bg-purple-950/30 border border-purple-500/30 p-3.5 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-purple-400 transition-colors resize-none"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono uppercase tracking-wider text-zinc-300 mb-1.5">
+                Your Contact (Email or Discord Handle) <span class="text-cyan-400">*</span>
+              </label>
+              <input type="text" id="scopeContactInput" placeholder="e.g. alex@gmail.com or @alex_dev"
+                class="w-full rounded-xl bg-purple-950/30 border border-purple-500/30 p-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-purple-400 transition-colors" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STEP 5: Summary & Formspree Submission ================= -->
+        <div id="step5" class="scope-step hidden">
+          <h3 class="text-xl sm:text-2xl font-black text-white mb-2">
+            Confirm your inquiry
+          </h3>
+          <p class="text-zinc-300 text-xs sm:text-sm mb-6">
+            Review your gathered project scope before sending directly to Hauser via Formspree.
+          </p>
+
+          <!-- Summary Card -->
+          <div class="rounded-xl border border-purple-500/30 bg-purple-950/40 p-5 space-y-3 mb-6 font-mono text-xs">
+            <div class="flex items-center justify-between pb-2 border-b border-purple-900/50">
+              <span class="text-zinc-400 uppercase">Project:</span>
+              <span class="text-white font-bold" id="summaryProject">Website</span>
+            </div>
+            <div class="flex items-center justify-between pb-2 border-b border-purple-900/50">
+              <span class="text-zinc-400 uppercase">Timeline:</span>
+              <span class="text-cyan-400 font-bold" id="summaryTimeline">1-2 weeks</span>
+            </div>
+            <div class="flex items-center justify-between pb-2 border-b border-purple-900/50">
+              <span class="text-zinc-400 uppercase">Budget:</span>
+              <span class="text-purple-300 font-bold" id="summaryBudget">Under $25</span>
+            </div>
+            <div class="flex items-center justify-between pb-2 border-b border-purple-900/50">
+              <span class="text-zinc-400 uppercase">Contact:</span>
+              <span class="text-emerald-400 font-bold" id="summaryContact">-</span>
+            </div>
+            <div class="pt-1">
+              <span class="text-zinc-400 uppercase block mb-1">About of it:</span>
+              <p class="text-zinc-200 font-sans text-xs italic bg-purple-950/60 p-3 rounded-lg border border-purple-500/25"
+                id="summaryDesc">
+                -
+              </p>
+            </div>
+          </div>
+
+          <p class="text-[11px] font-mono text-zinc-400 text-center mb-4">
+            Inquiry will be delivered securely via Formspree.
+          </p>
+        </div>
+
+        <!-- ================= STEP 6: Success State ================= -->
+        <div id="stepSuccess" class="scope-step hidden text-center py-6">
+          <div
+            class="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 p-[2px] mx-auto mb-5 shadow-[0_0_35px_rgba(6,182,212,0.5)]">
+            <div class="w-full h-full bg-[#0d0922] rounded-full flex items-center justify-center">
+              <i data-lucide="check" class="w-8 h-8 text-cyan-400"></i>
+            </div>
+          </div>
+
+          <h3 class="text-2xl sm:text-3xl font-black text-white mb-3">
+            Looks like a good fit.
+          </h3>
+          <p class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 mb-2">
+            Inquiry sent successfully! Done!
+          </p>
+          <p class="text-zinc-300 text-xs sm:text-sm max-w-sm mx-auto mb-8">
+            Thank you for reaching out. Aryan will review your requirements and respond back within 24 to 48 hours.
+          </p>
+
+          <button onclick="closeScopeModal()"
+            class="glow-btn px-8 py-3 rounded-full text-white text-xs font-semibold uppercase tracking-wider">
+            Close window
+          </button>
+        </div>
+
+      </div>
+
+      <!-- NAVIGATION BUTTONS: Back & Next -->
+      <div id="scopeModalNav" class="flex items-center justify-between pt-6 border-t border-purple-900/50">
+        <button id="scopePrevBtn" onclick="navigateScopeStep(-1)"
+          class="glow-btn-outline px-5 py-2.5 rounded-full text-zinc-300 text-xs font-semibold flex items-center gap-1.5 opacity-40 cursor-not-allowed">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>← Back</span>
+        </button>
+
+        <button id="scopeNextBtn" onclick="navigateScopeStep(1)"
+          class="glow-btn px-6 py-2.5 rounded-full text-white text-xs font-semibold flex items-center gap-1.5">
+          <span id="scopeNextBtnText">Next →</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5" id="scopeNextBtnIcon"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================ -->
+  <!-- SEARCH MODAL (Triggered by Cmd+K or search badge) -->
+  <!-- ============================================ -->
+  <div id="searchModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card w-full max-w-lg rounded-2xl p-6 shadow-[0_0_55px_rgba(147,51,234,0.35)]">
+      <div class="flex items-center gap-3 border-b border-purple-900/50 pb-4 mb-4">
+        <i data-lucide="search" class="w-5 h-5 text-cyan-400"></i>
+        <input type="text" id="modalSearchInput" placeholder="Search services, links, or drops..."
+          class="bg-transparent border-none outline-none text-white text-base w-full font-mono placeholder:text-zinc-500" />
+        <kbd
+          class="text-[10px] font-mono text-zinc-400 bg-purple-950 px-2 py-1 rounded border border-purple-800/50">ESC</kbd>
+      </div>
+      <div class="space-y-2 font-mono text-xs">
+        <a href="#services"
+          class="search-result-item flex items-center justify-between p-3 rounded-lg hover:bg-purple-900/40 text-zinc-200 hover:text-white">
+          <span>Featured Works</span>
+          <span class="text-zinc-400">#services</span>
+        </a>
+        <a href="#store"
+          class="search-result-item flex items-center justify-between p-3 rounded-lg hover:bg-purple-900/40 text-zinc-200 hover:text-white">
+          <span>Digital Products & Store</span>
+          <span class="text-zinc-400">#store</span>
+        </a>
+        <a href="#networks"
+          class="search-result-item flex items-center justify-between p-3 rounded-lg hover:bg-purple-900/40 text-zinc-200 hover:text-white">
+          <span>Discord & Networks</span>
+          <span class="text-zinc-400">#networks</span>
+        </a>
+        <a href="#contact"
+          class="search-result-item flex items-center justify-between p-3 rounded-lg hover:bg-purple-900/40 text-zinc-200 hover:text-white">
+          <span>Contact & Inquiries</span>
+          <span class="text-zinc-400">#contact</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- External Modular Application Script -->
+  <script src="script.js" defer></script>
 </body>
+
 </html>
