@@ -1,6 +1,6 @@
 /**
  * ==========================================================================
- * HAUSER.LOL — CLIENT APPLICATION SCRIPT
+ * ARYAN — CLIENT APPLICATION SCRIPT
  * Handles mouse trailer, space canvas, search palette, dynamic showcase tabs,
  * multi-step scoping wizard, and Formspree submission integration.
  * ==========================================================================
@@ -256,7 +256,7 @@ mobileLinks.forEach(link => {
 
 
 // ============================================
-// 7. DYNAMIC PORTFOLIO SHOWCASE LOGIC (WORK • STORE • DISCORD BOTS • WEBSITES • XENON MARKET • NETWORKS)
+// 7. DYNAMIC PORTFOLIO SHOWCASE LOGIC (WORK • STORE • WEBSITES • NETWORKS)
 // ============================================
 const dynamicShowcaseContainer = document.getElementById('dynamicShowcaseContainer');
 const filterButtons = document.querySelectorAll('.portfolio-filter-btn');
@@ -285,7 +285,7 @@ const showcaseTemplates = {
       <!-- Featured Work Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         
-        <!-- Project 1: Veltrix Discord Bot -->
+        <!-- Project 1 -->
         <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 hover:bg-purple-950/30 transition-all group">
           <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-[10px] uppercase tracking-wider text-cyan-400 bg-cyan-950/40 border border-cyan-800/50 px-2 py-0.5 rounded">Portfolio Webs</span>
@@ -298,17 +298,16 @@ const showcaseTemplates = {
             Little taste of it
           </h4>
           <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-4">
-            I make modern and very responsive portfolio websites for gamers, coders, fashion designers, and for persnol uses.
+            I make modern and very responsive portfolio websites for gamers, coders, fashion designers, and for personal uses.
           </p>
           <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-zinc-400">
             <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800">React</span>
             <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800">Node.js</span>
             <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800">Modern CSS</span>
-            
           </div>
         </div>
 
-        <!-- Project 2: Xenon Market Platform -->
+        <!-- Project 2 -->
         <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 hover:bg-purple-950/30 transition-all group">
           <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-[10px] uppercase tracking-wider text-purple-400 bg-purple-950/40 border border-purple-800/50 px-2 py-0.5 rounded">E-COMMERCE</span>
@@ -327,7 +326,7 @@ const showcaseTemplates = {
           </div>
         </div>
 
-        <!-- Project 3: Promo Creative Vault -->
+        <!-- Project 3 -->
         <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 hover:bg-purple-950/30 transition-all group">
           <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-[10px] uppercase tracking-wider text-pink-400 bg-pink-950/40 border border-pink-800/50 px-2 py-0.5 rounded">Artificial Intelligence</span>
@@ -346,7 +345,7 @@ const showcaseTemplates = {
           </div>
         </div>
 
-        <!-- Project 4: Aether Web Application -->
+        <!-- Project 4 -->
         <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 hover:bg-purple-950/30 transition-all group">
           <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-[10px] uppercase tracking-wider text-teal-400 bg-teal-950/40 border border-teal-800/50 px-2 py-0.5 rounded">Automation</span>
@@ -428,7 +427,7 @@ const showcaseTemplates = {
           </div>
           <div class="flex items-center justify-between pt-4 border-t border-purple-900/40 font-mono">
             <span class="text-white font-bold text-sm">$25.00</span>
-            <span class="text-xs text-pink-400">Delivered in >3days</span>
+            <span class="text-xs text-pink-400">Delivered in &lt;3days</span>
           </div>
         </div>
 
@@ -437,61 +436,13 @@ const showcaseTemplates = {
             <span class="text-xs font-mono text-teal-400 uppercase block mb-1">AI & Discord bots</span>
             <h4 class="text-lg font-bold text-white mb-2">Mini web apps & DC bots</h4>
             <p class="text-zinc-300 text-xs leading-relaxed mb-4">
-              Simple, interactive browser-based tools and daily task trackers, also fully animated and multi funtional bots for your server experence.
+              Simple, interactive browser-based tools and daily task trackers, also fully animated and multi functional bots for your server experience.
             </p>
           </div>
           <div class="flex items-center justify-between pt-4 border-t border-purple-900/40 font-mono">
             <span class="text-white font-bold text-sm">$100.00-$200.00</span>
             <span class="text-xs text-teal-400">1-3weeks</span>
           </div>
-        </div>
-      </div>
-    </div>
-  `,
-
-  'discord-bots': `
-    <div class="glass-card rounded-2xl p-6 sm:p-10 lg:p-12 w-full transition-all duration-300">
-      <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-8 border-b border-purple-500/20 gap-4">
-        <div>
-          <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase font-semibold block mb-1">
-            — DISCORD BOT ENGINEERING & HOSTING
-          </span>
-          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white">
-            Custom & Enterprise Discord Bots
-          </h3>
-        </div>
-        <button onclick="openScopeModal('Custom Web App / AI Tool')" 
-                class="glow-btn px-5 py-2 rounded-full text-white text-xs font-semibold flex items-center gap-1.5">
-          <span>Scope a bot →</span>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 transition-all">
-          <span class="font-mono text-xs text-cyan-400 uppercase block mb-2">01. Economy & RPG</span>
-          <h4 class="text-xl font-bold text-white mb-2">Veltrix Engine</h4>
-          <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-4">
-            700+ commands, custom casino games, server economy, leveling, canvas profile cards, and dynamic voice lobbies.
-          </p>
-          <div class="font-mono text-[11px] text-zinc-400">discord.js v14 · MongoDB</div>
-        </div>
-
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 transition-all">
-          <span class="font-mono text-xs text-purple-400 uppercase block mb-2">02. Ticket & Security</span>
-          <h4 class="text-xl font-bold text-white mb-2">Aegis Guard System</h4>
-          <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-4">
-            Interactive button/modal support tickets, automated HTML transcript generation, anti-raid CAPTCHA, and audit logs.
-          </p>
-          <div class="font-mono text-[11px] text-zinc-400">Slash Commands · Redis Cache</div>
-        </div>
-
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 transition-all">
-          <span class="font-mono text-xs text-pink-400 uppercase block mb-2">03. Custom Integrations</span>
-          <h4 class="text-xl font-bold text-white mb-2">API & Webhook Bots</h4>
-          <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-4">
-            Stripe purchase notifications, Xenon Market order syncer, auto-role assignments, and external database sync.
-          </p>
-          <div class="font-mono text-[11px] text-zinc-400">FastAPI · Webhook Relay</div>
         </div>
       </div>
     </div>
@@ -540,74 +491,6 @@ const showcaseTemplates = {
             <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800">Vercel</span>
           </div>
         </div>
-
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 transition-all">
-          <span class="text-xs font-mono text-teal-400 uppercase block mb-1"><h4>Comming Soon</h4></span>
-          <h4 class="text-xl font-bold text-white mb-2"></h4>
-          <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-4">
-            
-          </p>
-          <div class="flex gap-2 font-mono text-[10px] text-zinc-400">
-            <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800"></span>
-            <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800"></span>
-            <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800"></span>
-          </div>
-        </div>
-
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-6 hover:border-purple-400/50 transition-all">
-          <span class="text-xs font-mono text-pink-400 uppercase block mb-1">Comming Soon</span>
-          <h4 class="text-xl font-bold text-white mb-2"></h4>
-          <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-4">
-            
-          </p>
-          <div class="flex gap-2 font-mono text-[10px] text-zinc-400">
-            <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800"></span>
-            <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800"></span>
-            <span class="px-2 py-0.5 bg-black/40 rounded border border-zinc-800"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
-
-  'xenon-market': `
-    <div class="glass-card rounded-2xl p-6 sm:p-10 lg:p-12 w-full transition-all duration-300">
-      <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-8 border-b border-purple-500/20 gap-4">
-        <div>
-          <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase font-semibold block mb-1">
-            — OFFICIAL VERIFIED STOREFRONT
-          </span>
-          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white">
-            Everything Ships Through Xenon Market
-          </h3>
-        </div>
-        <a href="https://xenonmarket.mysellauth.com" target="_blank" 
-           class="glow-btn px-5 py-2 rounded-full text-white text-xs font-semibold flex items-center gap-1.5">
-          <span>Go to Xenon Market ↗</span>
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-5 text-center">
-          <i data-lucide="zap" class="w-6 h-6 text-cyan-400 mx-auto mb-2"></i>
-          <h4 class="font-bold text-white text-sm mb-1">Instant Delivery</h4>
-          <p class="text-zinc-400 text-xs">Automated download keys upon payment confirmation.</p>
-        </div>
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-5 text-center">
-          <i data-lucide="shield-check" class="w-6 h-6 text-purple-400 mx-auto mb-2"></i>
-          <h4 class="font-bold text-white text-sm mb-1">Verified Merchant</h4>
-          <p class="text-zinc-400 text-xs">Trusted seller on SellAuth with 100% positive feedback.</p>
-        </div>
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-5 text-center">
-          <i data-lucide="credit-card" class="w-6 h-6 text-pink-400 mx-auto mb-2"></i>
-          <h4 class="font-bold text-white text-sm mb-1">Crypto & Cards</h4>
-          <p class="text-zinc-400 text-xs">Stripe, Apple Pay, Bitcoin, Ethereum, LTC accepted.</p>
-        </div>
-        <div class="rounded-xl border border-purple-500/20 bg-purple-950/20 p-5 text-center">
-          <i data-lucide="life-buoy" class="w-6 h-6 text-teal-400 mx-auto mb-2"></i>
-          <h4 class="font-bold text-white text-sm mb-1">24/7 Handover</h4>
-          <p class="text-zinc-400 text-xs">Dedicated Discord support and setup guides included.</p>
-        </div>
       </div>
     </div>
   `,
@@ -620,7 +503,7 @@ const showcaseTemplates = {
             — DIRECT CHANNELS & PROFILES
           </span>
           <h3 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white">
-            Connect & Follow Hauser
+            Connect & Follow Aryan
           </h3>
         </div>
         <button onclick="openScopeModal()" 
@@ -654,8 +537,6 @@ const showcaseTemplates = {
           <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors"></i>
         </a>
 
-        
-
         <a href="https://github.com/AryanNotFound404" target="_blank" 
            class="p-5 rounded-xl border border-purple-500/20 bg-purple-950/20 hover:border-teal-400/50 flex items-center justify-between group transition-all">
           <div class="flex items-center gap-3">
@@ -685,7 +566,7 @@ function renderDynamicShowcase(category) {
   }, 160);
 }
 
-// Attach click listeners to new filter navigation bar
+// Attach click listeners to filter navigation bar
 filterButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     filterButtons.forEach(b => {
@@ -729,7 +610,7 @@ const TOTAL_STEPS = 5;
 const scopeData = {
   projectType: 'Website',
   timeline: '1-2 weeks',
-  budget: 'Under 5-10K (Recommended)',
+  budget: 'Under $25',
   description: '',
   contact: ''
 };
@@ -801,7 +682,7 @@ setTimeout(() => {
   if (step2Default) selectOption('timeline', '1-2 weeks', step2Default);
 
   const step3Default = document.querySelectorAll('#step3 .scope-option-card')[1];
-  if (step3Default) selectOption('budget', 'Under 5-10K (Recommended)', step3Default);
+  if (step3Default) selectOption('budget', 'Under $25', step3Default);
 }, 200);
 
 function showStep(stepIndex) {
@@ -869,7 +750,7 @@ function navigateScopeStep(direction) {
     const contact = contactInput ? contactInput.value.trim() : '';
 
     if (!contact) {
-      alert('Please enter your email or Discord handle so Hauser can reply back to you!');
+      alert('Please enter your email or Discord handle so Aryan can reply back to you!');
       if (contactInput) contactInput.focus();
       return;
     }
